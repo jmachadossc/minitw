@@ -1,10 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var movies = require('./movies'); 
+var users = require('./users'); 
 
 var app = express();
-var dbName = 'moviesDB';
+var dbName = 'usersDB';
 var connectionString = 'mongodb://localhost:27017/' + dbName;
 
 mongoose.connect(connectionString, function (err){
@@ -15,6 +15,6 @@ mongoose.connect(connectionString, function (err){
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use('/api', movies);
+app.use( users);
 
 module.exports = app;

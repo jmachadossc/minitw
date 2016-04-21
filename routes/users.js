@@ -1,18 +1,42 @@
 var User = require('../models/user');
+var Tweet = require('../models/tweet');
+
 var express = require('express');
 var router = express.Router();
 
-// router.route('/users').get(function (request, response) {
-//   User.find(function (err, users) {
-//     console.log(users);
-//     if (err) {
-//       console.error(err);
-//       return response.send(err);
-//     }
+router.route('/tweets').get(function (request, response) {
+  Tweet.find(function (err, tweets) {
+    if (err) {
+      console.error(err);
+      return response.send(err);
+    }
 
-//     response.json(users);
-//   });
-// });
+    response.json(tweets);
+  });
+});
+
+router.route('/tweets/:email').get(function (request, response) {
+  Tweet.find({ submitter: request.params.email },function (err, tweets) {
+    if (err) {
+      console.error(err);
+      return response.send(err);
+    }
+
+    response.json(tweets);
+  });
+});
+
+router.route('/tweets').post(function (request, response) {
+  var tweet = new Tweet(request.body);
+
+  tweet.save(function (err) {
+    if (err) {
+      return response.send(err);
+    }
+
+    response.send({ message: 'Twitted!' });
+  });
+});
 
 router.route('/users').post(function (request, response) {
   var user = new User(request.body);
@@ -26,8 +50,8 @@ router.route('/users').post(function (request, response) {
   });
 });
 
-router.route('/users/:id').put(function (request,response){
-  User.findOne({ _id: request.params.id }, function (err, user) {
+router.route('/users/:email').put(function (request,response){
+  User.findOne({ email: request.params.email }, function (err, user) {
     if (err) {
       return response.send(err);
     }
@@ -46,8 +70,8 @@ router.route('/users/:id').put(function (request,response){
   });
 });
 
-router.route('/user/:email').get(function (request, response) {
-  User.findOne({ _email: request.params.email}, function (err, user) {
+router.route('/users/:email').get(function (request, response) {
+  User.findOne({ email: request.params.email}, function (err, user) {
     if (err) {
       return response.send(err);
     }
@@ -57,7 +81,7 @@ router.route('/user/:email').get(function (request, response) {
 });
 
 router.route('/users/:email').delete(function (request, response) {
-  User.remove({ _email: request.params.email}, function (err, user) {
+  User.remove({ email: request.params.email}, function (err, user) {
     if (err) {
       return response.send(err);
     }

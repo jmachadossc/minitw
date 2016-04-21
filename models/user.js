@@ -7,4 +7,4 @@ var userSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('Movie', userSchema);
+module.exports = mongoose.model('User', userSchema);

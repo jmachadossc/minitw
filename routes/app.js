@@ -16,5 +16,7 @@ mongoose.connect(connectionString, function (err){
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use( users);
+app.use('/',express.static('/home/juanmanuel/minitw-client'));
+
 
 module.exports = app;

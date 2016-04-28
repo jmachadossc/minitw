@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var users = require('./users'); 
+var routes = require('./routes'); 
 
 var app = express();
 var dbName = 'usersDB';
@@ -15,7 +15,7 @@ mongoose.connect(connectionString, function (err){
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use( users);
+app.use(routes);
 app.use('/',express.static('/home/juanmanuel/minitw-client'));
 
 

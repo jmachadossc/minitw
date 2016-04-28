@@ -4,7 +4,7 @@ var Schema=mongoose.Schema;
 var tweetSchema = new Schema({
   content: String,
   submitter: String,
-  //date: Date
+  date: Date
 });
 
 

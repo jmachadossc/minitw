@@ -65,8 +65,8 @@ function follow (request, response){
 }
 
 function unfollow (request, response){
-	if(request.data.followerEmail && request.data.followedEmail){
-		var relation = new Following(request.data);
+	if(request.body.followerEmail && request.body.followedEmail){
+		var relation = new Following(request.body);
 	}else{
 		response.status(400).send();
 	}

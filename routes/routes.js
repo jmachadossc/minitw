@@ -16,7 +16,7 @@ router.route('/users/:email').get(usersController.getUser);
 router.route('/users/:email').delete(usersController.deleteUser);
 
 router.route('/follow').post(followingController.follow);
-router.route('/follow').delete(followingController.unfollow);
+router.route('/follow').put(followingController.unfollow);
 
 router.route('/follow/following/:email').get(followingController.getFollowing);
 router.route('/follow/followers/:email').get(followingController.getFollowers);

@@ -56,7 +56,7 @@ function getUser(request, response) {
   if(request.params.email){
     var email = request.params.email;
   }else{
-    request.status(400).send();
+    request.status(400).send('Invalid user email');
   }
   User.findOne({ email: email }, function (err, user) {
     if (err) {

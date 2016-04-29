@@ -1,4 +1,5 @@
 var Tweet = require('../models/tweet');
+var Following = require('../models/following');
 
 module.exports = {
 	findTweets:findTweets, 
@@ -23,26 +24,55 @@ function postTweet(request, response) {
 }
 
 function findTweets(request, response) {
-  Tweet.find(function (err, tweets) {
-    if (err) {
-      console.error(err);
+  var userTweets =[];
+  var f ;
+  var fTweets =[];
+  var fsTweets = [];
+  
+
+  Following.find({followerEmail: request.params.email}, function (err, follows){
+    if (err){
       return response.send(err);
     }
-
-    response.json(tweets);
+    f = follows;
+    tuits();
   });
+  function tuits(){
+    Tweet.find({submitter: request.params.userEmail}, function (err, tweets){
+      if (err){
+        return response.send(err);
+      }
+      userTweets = tweets;
+      detuits();
+    });
+  };
+  function detuits(){
+    for(i=0; i<f.length;i++){
+      Tweet.find({submitter: f[i]},
+       function (err, tweets) {
+        if (err) {
+          return response.send(err);
+        }
+        fTweets = tweets; 
+      });
+      fsTweets = fsTweets.concat(fTweets);  
+    }
+    var allTweets = userTweets.concat(fsTweets);
+    response.json(allTweets);
+}
+  
 }
 
 function findTweetsBySubmitter(request, response) {
   if(request.params.email){
     var email = request.params.email;
   }else{
-    response.status(400).send();
+    response.status(400).send('Invalid request');
   }
   Tweet.find({ submitter: email },function (err, tweets) {
     if (err) {
       console.error(err);
-      return response.send(err);
+      response.status(500).send(err);
     }
 
     response.json(tweets);
@@ -64,7 +94,7 @@ function deleteTweet(request, response) {
     if(tweet){
       response.json({ message: 'Tweet successfully deleted!' });      
     }else{
-      response.status(404).send(new Error('Tweet not found'));
+      response.status(500).send('Tweet not found');
     }
 
   });

@@ -24,12 +24,12 @@ function registerUser(request, response) {
 };
 
 function updateUser(request,response){
-  if(request.params.email){
-    var email = request.params.email;    
+  if(request.params.userEmail){
+    var userEmail = request.params.userEmail;    
   }else{
     request.status(400).send();
   }
-  User.findOne({ email: email }, function (err, user) {
+  User.findOne({ email: userEmail }, function (err, user) {
     if (err) {
       return response.send(err);
     }
@@ -53,12 +53,12 @@ function updateUser(request,response){
 };
 
 function getUser(request, response) {
-  if(request.params.email){
-    var email = request.params.email;
+  if(request.params.userEmail){
+    var userEmail = request.params.userEmail;
   }else{
     request.status(400).send('Invalid user email');
   }
-  User.findOne({ email: email }, function (err, user) {
+  User.findOne({ email: userEmail }, function (err, user) {
     if (err) {
       return response.send(err);
     }
@@ -71,12 +71,12 @@ function getUser(request, response) {
 };
 
 function deleteUser(request, response) {
-  if(request.params.email){
-    var email = request.params.email;
+  if(request.params.userEmail){
+    var userEmail = request.params.userEmail;
   }else{
     request.status(400).send();
   }
-  User.remove({ email: email}, function (err, user) {
+  User.remove({ email: userEmail}, function (err, user) {
     if (err) {
       return response.send(err);
     }

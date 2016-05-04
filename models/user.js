@@ -3,8 +3,8 @@ var Schema=mongoose.Schema;
 
 var userSchema = new Schema({
   name: String,
-  email: String
-
+  email: String,
+  avatarUrl: String
 });
 
 

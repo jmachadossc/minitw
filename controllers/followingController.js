@@ -25,8 +25,6 @@ function getFollowing(request, response) {
 	} else {
 		response.status(400).send();
 	}
-
-
 }
 
 function getFollowers(request, response) {
@@ -39,7 +37,6 @@ function getFollowers(request, response) {
 				response.send(err);
 			}
 			response.send(followers);
-
 		});
 	} else {
 		response.status(400).send();

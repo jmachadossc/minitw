@@ -5,10 +5,10 @@ var followingController = require('../controllers/followingController');
 var express = require('express');
 var router = express.Router();
 
-router.route('/users/:userEmail/tweets/following').get(tweetsController.findTweets);
-router.route('/users/:userEmail/tweets').get(tweetsController.findTweetsBySubmitter);
-router.route('/users/:userEmail/tweets/:tweetid').delete(tweetsController.deleteTweet);
-router.route('/users/:userEmail/tweets').post(tweetsController.postTweet);
+router.route('/users/:userEmail/tweets/following').get(tweetsController.findTweets.bind(tweetsController));
+router.route('/users/:userEmail/tweets').get(tweetsController.findTweetsBySubmitter.bind(tweetsController));
+router.route('/users/:userEmail/tweets/:tweetid').delete(tweetsController.deleteTweet.bind(tweetsController));
+router.route('/users/:userEmail/tweets').post(tweetsController.postTweet.bind(tweetsController));
 
 router.route('/users').post(usersController.registerUser);
 router.route('/users/:userEmail').put(usersController.updateUser);
